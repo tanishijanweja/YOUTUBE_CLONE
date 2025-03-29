@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div>
       <Image src="/logo.svg" height={50} width={50} alt="Logo"/>
-      <p className="text-xl font-semibold tracking-tight">YouTube</p>
+      <p className="text-xl font-semibold tracking-tight">YouTube2</p>
     </div>
   );
 }

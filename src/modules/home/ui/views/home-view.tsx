@@ -1,3 +1,5 @@
+import { CategoriesSection } from "../sections/category-section";
+
 interface HomeViewProps {
   categoryId?: string;
 }

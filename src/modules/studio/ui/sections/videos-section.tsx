@@ -5,6 +5,14 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export const VideosSection = () => {
   return (
@@ -27,6 +35,15 @@ export const VideosSectionSuspense = () => {
   );
   return (
     <div>
+      <div className="border-y">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="pl-6 w-[510px]">Video</TableHead>
+            </TableRow>
+          </TableHeader>
+        </Table>
+      </div>
       {JSON.stringify(data)}
       <Infinitescroll
         isManual

@@ -30,7 +30,13 @@ export const ThumbnailUploadModal = ({
       <UploadDropzone
         endpoint="thumbnailUploader"
         input={{ videoId }}
-        onClientUploadComplete={onUploadComplete}
+        onClientUploadComplete={() => {
+          console.log("Upload complete");
+          onUploadComplete();
+        }}
+        onUploadError={(error) => {
+          console.error("Upload failed:", error);
+        }}
       />
     </ResponsiveModal>
   );

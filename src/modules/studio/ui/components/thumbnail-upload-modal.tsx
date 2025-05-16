@@ -29,7 +29,7 @@ export const ThumbnailUploadModal = ({
     >
       <UploadDropzone
         endpoint="thumbnailUploader"
-        input={{ videoId }}
+        input={{ videoId: videoId }}
         onClientUploadComplete={() => {
           onUploadComplete();
         }}

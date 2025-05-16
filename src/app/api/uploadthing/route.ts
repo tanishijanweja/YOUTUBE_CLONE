@@ -1,49 +1,11 @@
-<<<<<<< HEAD
 import { createUploadthing, createRouteHandler } from "uploadthing/next";
-=======
-// import { createRouteHandler } from "uploadthing/next";
->>>>>>> b7e16d754c09580e132f12b3da05e7644b800591
 
-// import { ourFileRouter } from "./core";
-
-// // Export routes for Next App Router
-// export const { GET, POST } = createRouteHandler({
-//   router: ourFileRouter,
-
-//   // Apply an (optional) custom config:
-//   // config: { ... },
-// });
-
-import { NextRequest } from "next/server";
-import { createRouteHandler } from "uploadthing/next";
 import { ourFileRouter } from "./core";
 
-const handler = createRouteHandler({
+// Export routes for Next App Router
+export const { GET, POST } = createRouteHandler({
   router: ourFileRouter,
+
+  // Apply an (optional) custom config:
+  // config: { ... },
 });
-
-// Wrap POST handler with error logging
-export async function POST(request: NextRequest) {
-  try {
-    return await handler.POST(request);
-  } catch (error) {
-    console.error("Uploadthing POST error:", error);
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-}
-
-// Wrap GET handler with error logging (if needed)
-export async function GET(request: NextRequest) {
-  try {
-    return await handler.GET(request);
-  } catch (error) {
-    console.error("Uploadthing GET error:", error);
-    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-}

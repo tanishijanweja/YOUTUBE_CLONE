@@ -31,11 +31,7 @@ export const ThumbnailUploadModal = ({
         endpoint="thumbnailUploader"
         input={{ videoId }}
         onClientUploadComplete={() => {
-          console.log("Upload complete");
           onUploadComplete();
-        }}
-        onUploadError={(error) => {
-          console.error("Upload failed:", error);
         }}
       />
     </ResponsiveModal>

@@ -8,7 +8,6 @@ import { z } from "zod";
 
 const f = createUploadthing();
 export const ourFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
   thumbnailUploader: f({
     image: {
       maxFileSize: "4MB",
@@ -38,7 +37,7 @@ export const ourFileRouter = {
       await db
         .update(videos)
         .set({
-          thumbnailUrl: file.url,
+          thumbnailUrl: file.ufsUrl,
         })
         .where(
           and(

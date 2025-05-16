@@ -1,8 +1,7 @@
-import { withUt } from "uploadthing/tw";
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate"; // Import the plugin using ES module syntax
 
-export default withUt({
+export default ({
   darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",

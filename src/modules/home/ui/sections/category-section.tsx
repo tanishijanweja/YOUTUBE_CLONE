@@ -22,7 +22,7 @@ export const CategoriesSection = ({ categoryId }: CategoriesSectionProps) => {
 };
 
 const CategoriesSkeleton = () => {
-  return <FilterCarousel isLoading data={[]} onSelect={() => {}} />;
+  return <FilterCarousel isLoading data={[]} onSelectAction={() => {}} />;
 };
 
 const CategoriesSectionSuspense = ({ categoryId }: CategoriesSectionProps) => {
@@ -45,5 +45,7 @@ const CategoriesSectionSuspense = ({ categoryId }: CategoriesSectionProps) => {
     router.push(url.toString());
   };
 
-  return <FilterCarousel onSelect={onSelect} value={categoryId} data={data} />;
+  return (
+    <FilterCarousel onSelectAction={onSelect} value={categoryId} data={data} />
+  );
 };

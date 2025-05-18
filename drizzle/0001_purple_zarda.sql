@@ -19,7 +19,7 @@ CREATE TABLE "videos" (
 	"mux_track_id" text,
 	"mux_track_status" text,
 	"thumbnail_url" text,
-	"previewl_url" text,
+	"preview_url" text,
 	"duration" integer DEFAULT 0 NOT NULL,
 	"visibility" "video_visibility" DEFAULT 'private' NOT NULL,
 	"user_id" uuid NOT NULL,

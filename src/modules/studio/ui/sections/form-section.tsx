@@ -61,7 +61,7 @@ export const FormSection = ({ videoId }: FormSectionProps) => {
   return (
     <Suspense fallback={<FormSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error</p>}>
-        <FormSectionSuspensse videoId={videoId} />
+        <FormSectionSuspense videoId={videoId} />
       </ErrorBoundary>
     </Suspense>
   );
@@ -71,7 +71,7 @@ const FormSectionSkeleton = () => {
   return <p>Loading...</p>;
 };
 
-const FormSectionSuspensse = ({ videoId }: FormSectionProps) => {
+const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   const router = useRouter();
   const utils = trpc.useUtils();
 
@@ -96,6 +96,17 @@ const FormSectionSuspensse = ({ videoId }: FormSectionProps) => {
       utils.studio.getMany.invalidate();
       toast.success("Video removed");
       router.push("/studio");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+
+  const restoreThumbnail = trpc.videos.restoreThumbnail.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate();
+      utils.studio.getOne.invalidate({ id: videoId });
+      toast.success("Thumbnail restored");
     },
     onError: () => {
       toast.error("Something went wrong");
@@ -242,7 +253,11 @@ const FormSectionSuspensse = ({ videoId }: FormSectionProps) => {
                               <SparklesIcon className="size-4 mr-1" />
                               AI-generated
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() =>
+                                restoreThumbnail.mutate({ id: videoId })
+                              }
+                            >
                               <RotateCcwIcon className="size-4 mr-1" />
                               Restore
                             </DropdownMenuItem>

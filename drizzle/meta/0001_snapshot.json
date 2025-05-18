@@ -215,8 +215,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "previewl_url": {
-          "name": "previewl_url",
+        "preview_url": {
+          "name": "preview_url",
           "type": "text",
           "primaryKey": false,
           "notNull": false

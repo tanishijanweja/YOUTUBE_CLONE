@@ -4,7 +4,7 @@ import { HydrateClient, trpc } from "@/trpc/server";
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: Promise<{ videoId: string }>;
+  params: { videoId: string };
 }
 const Page = async ({ params }: PageProps) => {
   const { videoId } = await params;

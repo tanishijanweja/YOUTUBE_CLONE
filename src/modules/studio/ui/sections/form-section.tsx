@@ -18,12 +18,12 @@ import {
   LockIcon,
   MoreVerticalIcon,
   RotateCcwIcon,
-  SparkleIcon,
   SparklesIcon,
   TrashIcon,
 } from "lucide-react";
 import { videoUpdateSchema } from "@/db/schema";
 import { toast } from "sonner";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,6 +54,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
+import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
 interface FormSectionProps {
   videoId: string;
 }
@@ -69,7 +70,58 @@ export const FormSection = ({ videoId }: FormSectionProps) => {
 };
 
 const FormSectionSkeleton = () => {
-  return <p>Loading...</p>;
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div className="space-y-2">
+          <Skeleton className="h-7 w-32" />
+          <Skeleton className="h-4 w-40" />
+        </div>
+        <Skeleton className="h-9 w-24" />
+      </div>
+      <div className=" grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="space-y-8 lg:col-span-3">
+          <Skeleton className="h-5 w-16" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-24" />
+          <Skeleton className="h-[220px] w-full" />
+        </div>
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-20" />
+          <Skeleton className="h-[84px] w-[153px]" />
+        </div>
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-20" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+        <div className="flex flex-col gap-y-8 lg:col-span-2">
+          <div className="flex flex-col gap-4 bg-[#F9F9F9] rounded-xl overflow-hidden">
+            <Skeleton className="aspect-video" />
+            <div className="px-4 py-4 space-y-6">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-5 w-full" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-5 w-32" />
+              </div>
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-5 w-32" />
+              </div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-5 w-20" />
+            <Skeleton className="h-10 w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
@@ -77,6 +129,8 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   const utils = trpc.useUtils();
 
   const [thumbnailModalOpen, setThumbnailModalOpen] = useState(false);
+  const [thumbnailGenerateModalOpen, setThumbnailGenerateModalOpen] =
+    useState(false);
 
   const [video] = trpc.studio.getOne.useSuspenseQuery({ id: videoId });
   const [categories] = trpc.categories.getMany.useSuspenseQuery();
@@ -134,16 +188,6 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     },
   });
 
-  const generateThumbnail = trpc.videos.generateThumbnail.useMutation({
-    onSuccess: () => {
-      toast.success("Background job started", {
-        description: "This may take some time",
-      });
-    },
-    onError: () => {
-      toast.error("Something went wrong");
-    },
-  });
   const form = useForm<z.infer<typeof videoUpdateSchema>>({
     resolver: zodResolver(videoUpdateSchema),
     defaultValues: video,
@@ -169,6 +213,11 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
 
   return (
     <>
+      <ThumbnailGenerateModal
+        open={thumbnailGenerateModalOpen}
+        onOpenChange={setThumbnailGenerateModalOpen}
+        videoId={videoId}
+      />
       <ThumbnailUploadModal
         open={thumbnailModalOpen}
         onOpenChange={setThumbnailModalOpen}
@@ -184,7 +233,10 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
               </p>
             </div>
             <div className="flex items-center gap-x-2">
-              <Button type="submit" disabled={update.isPending}>
+              <Button
+                type="submit"
+                disabled={update.isPending || !form.formState.isDirty}
+              >
                 Save
               </Button>
               <DropdownMenu>
@@ -318,7 +370,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() =>
-                                generateThumbnail.mutate({ id: videoId })
+                                setThumbnailGenerateModalOpen(true)
                               }
                             >
                               <SparklesIcon className="size-4 mr-1" />

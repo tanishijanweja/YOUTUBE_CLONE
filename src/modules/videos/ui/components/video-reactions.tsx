@@ -6,6 +6,8 @@ import { VideoGetOneOutput } from "../../types";
 import { useClerk } from "@clerk/nextjs";
 import { trpc } from "@/trpc/client";
 import { toast } from "sonner";
+import { TRPCClientError } from "@trpc/client";
+import { AppRouter } from "@/trpc/routers/_app";
 
 interface VideoReactionProps {
   videoId: string;

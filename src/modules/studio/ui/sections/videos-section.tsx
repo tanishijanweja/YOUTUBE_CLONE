@@ -1,6 +1,6 @@
 "use client";
 
-import { Infinitescroll } from "@/components/infinite-scroll";
+import { InfiniteScroll } from "@/components/infinite-scroll";
 import { DEFAULT_LIMIT } from "@/constants";
 import { format } from "date-fns";
 import { trpc } from "@/trpc/client";
@@ -39,7 +39,7 @@ const VideosSectionSkeleton = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="pl-6 w-[510px]">Video</TableHead>
-              <TableHead>Visiblity</TableHead>
+              <TableHead>Visibility</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Date</TableHead>
               <TableHead className="text-right">Views</TableHead>
@@ -103,7 +103,7 @@ const VideosSectionSuspense = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="pl-6 w-[510px]">Video</TableHead>
-              <TableHead>Visiblity</TableHead>
+              <TableHead>Visibility</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Date</TableHead>
               <TableHead className="text-right">Views</TableHead>
@@ -169,7 +169,7 @@ const VideosSectionSuspense = () => {
         </Table>
       </div>
 
-      <Infinitescroll
+      <InfiniteScroll
         isManual
         hasNextPage={query.hasNextPage}
         isFetchingNextPage={query.isFetchNextPageError}

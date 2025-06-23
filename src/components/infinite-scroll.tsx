@@ -9,7 +9,7 @@ interface InfiniteScrollProps {
   fetchNextPage: () => void;
 }
 
-export const Infinitescroll = ({
+export const InfiniteScroll = ({
   isManual = false,
   hasNextPage,
   isFetchingNextPage,

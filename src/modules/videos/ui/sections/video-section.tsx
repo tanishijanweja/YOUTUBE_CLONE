@@ -24,9 +24,8 @@ export const VideosSection = ({ videoId }: VideosSectionProps) => {
 };
 const VideosSectionSuspense = ({ videoId }: VideosSectionProps) => {
   const { isSignedIn } = useAuth();
-
-  const utils = trpc.useUtils();
   const [video] = trpc.videos.getOne.useSuspenseQuery({ id: videoId });
+  const utils = trpc.useUtils();
   const createView = trpc.videoViews.create.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
@@ -58,3 +57,4 @@ const VideosSectionSuspense = ({ videoId }: VideosSectionProps) => {
     </>
   );
 };
+

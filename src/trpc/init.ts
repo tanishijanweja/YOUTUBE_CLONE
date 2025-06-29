@@ -1,16 +1,23 @@
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { users } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { cache } from "react";
 import superjson from "superjson";
 import { ratelimit } from "@/lib/ratelimit";
-export const createTRPCContext = cache(async () => {
-  const { userId } = await auth();
+import { NextRequest } from "next/server";
 
-  return { clerkUserId: userId };
-});
+export async function createTRPCContext({ req }: { req: Request }) {
+  const nextReq = new NextRequest(req);
+  const auth = getAuth(nextReq);
+  return { clerkUserId: auth.userId };
+}
+// export const createTRPCContext = cache(async () => {
+//   const { userId } = await auth();
+
+//   return { clerkUserId: userId };
+// });
 
 export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
 // Avoid exporting the entire t-object

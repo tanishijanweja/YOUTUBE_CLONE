@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { VideoPlayer } from "../components/video-player";
+import { VideoPlayer, VideoPlayerSkeleton } from "../components/video-player";
 import { VideoBanner } from "../components/video-banner";
 import { VideoTopRow } from "../components/video-top-row";
 import { useAuth } from "@clerk/nextjs";
@@ -22,6 +22,15 @@ export const VideosSection = ({ videoId }: VideosSectionProps) => {
     </Suspense>
   );
 };
+
+const VideosSectionSkeleton = () => {
+  return (
+    <>
+      <VideoPlayerSkeleton />
+    </>
+  );
+};
+
 const VideosSectionSuspense = ({ videoId }: VideosSectionProps) => {
   const { isSignedIn } = useAuth();
   const [video] = trpc.videos.getOne.useSuspenseQuery({ id: videoId });
@@ -57,4 +66,3 @@ const VideosSectionSuspense = ({ videoId }: VideosSectionProps) => {
     </>
   );
 };
-

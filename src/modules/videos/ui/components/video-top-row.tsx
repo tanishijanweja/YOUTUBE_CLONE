@@ -1,6 +1,7 @@
-import { VideoOwner } from "@/modules/studio/ui/components/video-owner";
+// import { VideoOwner } from "@/modules/studio/ui/components/video-owner";
 import { VideoGetOneOutput } from "../../types";
 import { VideoMenu } from "./video-menu";
+import { VideoOwner } from "./video-owner";
 import { VideoReaction } from "./video-reactions";
 import { VideoDescription } from "./video-description";
 import { useMemo } from "react";
